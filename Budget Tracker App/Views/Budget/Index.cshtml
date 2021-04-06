@@ -1,0 +1,76 @@
+﻿@model Budget_Tracker_App.ViewModels.SpendingViewModel
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="~/css/Main.css" rel="stylesheet" />
+<div id="calendar"></div>
+
+<div>
+    <form method="post" asp-controller="Budget" asp-action="Index">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <input type="hidden" id="input" asp-for="Date" value="" />
+        </div>
+
+        <div>
+            <label asp-for="SpendAmount"></label><br />
+            <input asp-for="SpendAmount" />
+            <span asp-validation-for="SpendAmount"></span>
+        </div>
+        <div>
+            <label asp-for="Category"></label><br />
+            <input asp-for="Category" />
+            <span asp-validation-for="Category"></span>
+        </div>
+        <div>
+            <input type="submit" value="Create Entry" />
+        </div>
+    </form>
+</div>
+<div id="rData">
+</div>
+
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = dd + '/' + mm + '/' + yyyy;
+            $("#input").val(today);
+            function ShowSpendings(date) {
+                $.get("Budget/GetSpendings", { date: date }, function (data) {
+                    $("#rData").empty();
+                    $("#rData").html(data);
+                })
+            }
+            ShowSpendings(today);
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'prev next'
+                },
+                aspectRatio: 1,
+                dayClick: function (date, jsEvent, view) {
+                    $("#input").val(date.format("DD/MM/YYYY"));
+                    $(".day-highlight").removeClass("day-highlight");
+                    $(this).addClass("day-highlight");
+                    date = $('#input').val();
+                    ShowSpendings(date);
+                }
+
+            });
+            
+
+
+        });
+    </script>
+}

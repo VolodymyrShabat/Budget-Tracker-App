@@ -1,0 +1,19 @@
+﻿@model Budget_Tracker_App.Models.Spending
+
+<form asp-action="Edit" asp-controller="Budget" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label asp-for="Category" class="control-label">Category</label>
+        <input type="text" asp-for="Category" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SpendAmount" class="control-label">SpendAmount</label>
+        <input type="text" asp-for="SpendAmount" class="form-control" />
+    </div>
+    <div class="form-group" style="display: none;">
+        <label asp-for="Date" class="control-label">SpendAmount</label>
+        <input type="datetime" asp-for="Date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+</form>
