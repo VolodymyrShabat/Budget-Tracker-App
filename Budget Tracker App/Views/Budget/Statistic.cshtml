@@ -1,0 +1,73 @@
+﻿<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="~/css/Main.css" rel="stylesheet" asp-append-version="true"/>
+<div style="overflow: hidden!important;">
+    <div class="main-container" style="width:1000px!important;">
+        <div id="calendar" style="float: left!important;"></div>
+        <div id="rData" style="float: left!important; margin-top:100px;">
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function ShowStatistic(date) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetStat")',
+                data: { date: date },
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data) {
+                $("#rData").empty();
+                $("#rData").html(data);
+            }
+
+            function errorFunc() {
+                alert('Error');
+            }
+            
+        }
+        $(document).ready(function () {
+
+            $('#calendar').fullCalendar({
+                customButtons: {
+                    myCustomPrev: {
+                        text: '<',
+                        click: function () {
+                            $('#calendar').fullCalendar('prev');
+                            ShowStatistic($('.fc-toolbar .fc-left').text().toString());
+                        }
+                    },
+                    myCustomNext: {
+                        text: '>',
+                        click: function () {
+                            $('#calendar').fullCalendar('next');
+                            ShowStatistic($('.fc-toolbar .fc-left').text().toString());
+                        }
+                    }
+                },
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'myCustomPrev myCustomNext'
+                },
+                aspectRatio: 1,
+                dayClick: function (date, jsEvent, view) {
+                    
+                }
+
+            });
+            ShowStatistic($('.fc-toolbar .fc-left').text().toString());
+
+        });
+    </script>
+}

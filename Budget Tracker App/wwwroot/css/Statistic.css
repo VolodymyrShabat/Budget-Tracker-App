@@ -1,0 +1,105 @@
+﻿.fc-basic-view .fc-body .fc-row {
+    min-height: 1em !important;
+}
+
+#calendar {
+    margin-top: 100px;
+    width: 21%;
+}
+
+.fc-toolbar {
+    font-size: .9em;
+}
+body {
+    background-color: #F3EBF6;
+    font-family: 'Ubuntu', sans-serif;
+}
+    .fc-toolbar h2 {
+        font-size: 20px;
+        white-space: normal !important;
+    }
+
+.day-highlight {
+    background-color: red !important;
+    color: red !important;
+}
+
+body {
+    background-color: #F3EBF6;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.styled-table {
+    border-collapse: collapse;
+    margin: auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: 180px;
+    margin-top: 150px!important;
+}
+
+    .styled-table thead tr {
+        background-color: #4B0082;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+.table-button-edit {
+    background-color: #1E90FF;
+    border-radius: 10px;
+    border: 1px solid;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
+}
+
+    .table-button-edit:hover {
+        background-color: #B0C4DE;
+    }
+
+
+
+
+.table-button-delete {
+    background-color: #DC143C;
+    border-radius: 10px;
+    border: 1px solid;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
+}
+
+    .table-button-delete:hover {
+        background-color: #F08080;
+    }
+
+
+
+.main-container {
+    display: flex!important;
+    justify-content: space-between!important;
+}
+
+.container {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+

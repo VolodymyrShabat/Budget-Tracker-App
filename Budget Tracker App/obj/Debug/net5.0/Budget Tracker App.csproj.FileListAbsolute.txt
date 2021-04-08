@@ -61,8 +61,6 @@ C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Budget Tracker App.TagHelpers.output.cache
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Budget Tracker App.RazorCoreGenerate.cache
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
-C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -83,3 +81,6 @@ C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Budget\Index.cshtml.g.cs
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Budget\_SpendingPartial.cshtml.g.cs
 C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Budget\Edit.cshtml.g.cs
+C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Budget\Statistic.cshtml.g.cs
+C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\obj\Debug\net5.0\Razor\Views\Budget\_SpendingMonthPartial.cshtml.g.cs
+C:\Users\Volod\source\repos\Budget Tracker App\Budget Tracker App\bin\Debug\net5.0\web.config

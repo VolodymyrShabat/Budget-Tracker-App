@@ -22,7 +22,14 @@ namespace Budget_Tracker_App.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            if (_SignInManager.IsSignedIn(User))
+            {
+                return Redirect("~/Budget/Index");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -35,7 +42,7 @@ namespace Budget_Tracker_App.Controllers
                 if (result.Succeeded)
                 {
                     await _SignInManager.SignInAsync(user, false);
-                    return RedirectToAction("Home", "Index");
+                    return RedirectToAction("Index", "Budget");
                 }
                 else
                 {
@@ -52,7 +59,15 @@ namespace Budget_Tracker_App.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            if (_SignInManager.IsSignedIn(User))
+            {
+                return Redirect("~/Budget/Index");
+            }
+            else
+            {
+                return View(new LoginViewModel { ReturnUrl = returnUrl });
+            }
+                
         }
 
         [HttpPost]
@@ -71,12 +86,12 @@ namespace Budget_Tracker_App.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Budget");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    ModelState.AddModelError("", "Wrong login and (or) password");
                 }
             }
             return View(model);
@@ -87,7 +102,7 @@ namespace Budget_Tracker_App.Controllers
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         [Authorize]
@@ -117,7 +132,7 @@ namespace Budget_Tracker_App.Controllers
                     var result = await _UserManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Budget");
                     }
                     else
                     {

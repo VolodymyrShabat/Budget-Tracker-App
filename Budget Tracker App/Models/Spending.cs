@@ -18,5 +18,6 @@ namespace Budget_Tracker_App.Models
         public decimal SpendAmount { get; set; }
 
         public DateTime Date { get; set; }
+        public string UserId { get; set; }
     }
 }

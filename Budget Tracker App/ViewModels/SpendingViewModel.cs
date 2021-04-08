@@ -10,6 +10,7 @@ namespace Budget_Tracker_App.ViewModels
     {
         [Required]
         [Display(Name = "Spend Amount ($)")]
+        [Range(0.01, int.MaxValue, ErrorMessage = "Amount must be greater or equal to 0.01")]
         public decimal SpendAmount { get; set; }
         [Required]
         [Display(Name = "Category")]

@@ -10,6 +10,7 @@ namespace Budget_Tracker_App.ViewModels
     {
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -28,6 +29,7 @@ namespace Budget_Tracker_App.ViewModels
         public string PasswordConfirm { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Salary must be greater or equal to 0")]
         [Display(Name = "Salary")]
         public int Salary { get; set; }
     }

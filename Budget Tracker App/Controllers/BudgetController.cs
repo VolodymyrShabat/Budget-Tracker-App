@@ -1,30 +1,62 @@
 ﻿using Budget_Tracker_App.Models;
 using Budget_Tracker_App.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Budget_Tracker_App.Controllers
 {
+    [Authorize]
     public class BudgetController : Controller
     {
         private ApplicationDbContext _db;
-        public BudgetController(ApplicationDbContext db)
+        private readonly UserManager<User> _UserManager;
+        private string IdOfCurrentUser;
+        public BudgetController(ApplicationDbContext db, UserManager<User> userManager)
         {
+           
             _db = db;
+            _UserManager = userManager;
+            
         }
+
+        [HttpGet]
+        public IActionResult GetStat(string date)
+        {
+        
+            IdOfCurrentUser = _UserManager.GetUserId(HttpContext.User);
+            string k = IdOfCurrentUser;
+            var datex = (int)Month.Parse(typeof(Month), date.Split(" ")[0], true);
+            var s = _db.Spendings.Select(x => x.Date.Month).First().ToString();
+            var spendings = _db.Spendings.Where(x => x.Date.Month == datex && x.UserId == IdOfCurrentUser).ToList();
+            UserNameSpendingViewModel result = new UserNameSpendingViewModel { spendings = spendings, Salary = _db.Users.Where(x => x.Id == IdOfCurrentUser).First().Salary };
+            var fd = result.Salary;
+            return PartialView("_SpendingMonthPartial",result);
+        }
+
+
         [HttpGet]
         public IActionResult GetSpendings(string date)
         {
-            var spendings = _db.Spendings.Where(x => x.Date == DateTime.Parse(date)).ToList();
+            IdOfCurrentUser = _UserManager.GetUserId(HttpContext.User);
+            var spendings = _db.Spendings.Where(x => x.Date == DateTime.Parse(date)&&x.UserId==IdOfCurrentUser).ToList();
             return PartialView("_SpendingPartial", spendings);
         }
 
         [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Statistic()
         {
             return View();
         }
@@ -45,7 +77,8 @@ namespace Budget_Tracker_App.Controllers
                 }
                 else
                 {
-                    _db.Spendings.Add(new Spending { Date = DateTime.Parse(spendingViewModel.Date), Category = spendingViewModel.Category.ToLower(), SpendAmount = spendingViewModel.SpendAmount });
+                    _db.Spendings.Add(new Spending { Date = DateTime.Parse(spendingViewModel.Date), Category = spendingViewModel.Category.ToLower(), SpendAmount = spendingViewModel.SpendAmount, UserId = _UserManager.GetUserId(HttpContext.User)
+                });
                     await _db.SaveChangesAsync();
                     return View();
                 }

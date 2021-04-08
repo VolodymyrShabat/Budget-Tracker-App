@@ -1,0 +1,77 @@
+﻿@model Budget_Tracker_App.ViewModels.UserNameSpendingViewModel
+@{decimal sum = @Model.spendings.Select(x => x.SpendAmount).Sum();}
+@{decimal salary = Model.Salary;}
+@{decimal difference = @salary - @sum;}
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Income</th>
+            <th>Spend Amount($)</th>
+            <th>Difference</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tr>
+        <td>@salary</td>
+        <td>@sum</td>
+        @if (salary == 0 && sum==0)
+        {
+            <td style="color:green">@difference</td>
+        }
+        else if (sum >= salary)
+        {
+            <td style="color:red">@difference</td>
+        }
+        else if (salary / 2 < sum)
+        {
+            <td style="color:orange">@difference</td>
+        }
+        else
+        {
+            <td style="color:green">@difference</td>
+        }
+    </tr>
+</table>
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Spend Amount($)</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.spendings)
+    {
+        <tr>
+            <td>@item.Category</td>
+            <td>@item.SpendAmount</td>
+            <td>@item.Date.ToString("dd/MM/yyyy")</td>
+        </tr>
+    }
+    <tr>
+        <td>Total</td>
+
+        @if (salary == 0 && sum == 0)
+        {
+            <td style="color:green">You Spent @sum $. Very good!</td>
+        }
+        else if (sum >= salary)
+        {
+            <td style="color:red">You Spent @sum $. You must spend less!</td>
+        }
+        else if (salary / 2 < sum)
+        {
+            <td style="color:orange">You Spent @sum $. It's normal, but try spend less money!</td>
+        }
+        else
+        {
+            <td style="color:green">You Spent @sum $. Very good!</td>
+        }
+
+    </tr>
+</table>
+
+
+

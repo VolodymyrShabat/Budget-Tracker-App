@@ -2,34 +2,42 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<link href="~/css/Main.css" rel="stylesheet" />
-<div id="calendar"></div>
-
+<link href="~/css/Main.css" rel="stylesheet" asp-append-version="true"/>
 <div>
-    <form method="post" asp-controller="Budget" asp-action="Index">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <input type="hidden" id="input" asp-for="Date" value="" />
+    <div class="main-part">
+        <div id="calendar"></div>
+        <div class="form-container">
+            <form name="Spendingform" class="form" method="post" asp-controller="Budget" asp-action="Index">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div>
+                    <input type="hidden" id="input" asp-for="Date" value="" />
+                </div>
+                <div class="input-div">
+                    <label asp-for="SpendAmount"></label><br/>
+                    <input asp-for="SpendAmount"/>
+                    <span class="validation" asp-validation-for="SpendAmount"></span>
+                </div>
+                <div class="input-div">
+                    <label asp-for="Category"></label><br/>
+                    <input asp-for="Category" />
+                    <span class="validation" asp-validation-for="Category"></span>
+                </div>
+                <div>
+                    <input class="submit" type="submit" value="Create Entry" />
+                </div>
+            </form>
         </div>
+        <div class="statistic">
+            <p>Want to see month statistic?</p>
 
-        <div>
-            <label asp-for="SpendAmount"></label><br />
-            <input asp-for="SpendAmount" />
-            <span asp-validation-for="SpendAmount"></span>
+            <a class="submit" style="padding:12px; border-radius:45%; text-decoration:none; margin-top:10px;" asp-action="Statistic" asp-controller="Budget">Statistic</a>
         </div>
-        <div>
-            <label asp-for="Category"></label><br />
-            <input asp-for="Category" />
-            <span asp-validation-for="Category"></span>
-        </div>
-        <div>
-            <input type="submit" value="Create Entry" />
-        </div>
-    </form>
+    </div>
+    <h3 style="margin-left:150px;">Day Spendings</h3>
+    <div id="rData">
+        
+    </div>
 </div>
-<div id="rData">
-</div>
-
 @section Scripts
 {
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -41,15 +49,27 @@
         {
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
             var yyyy = today.getFullYear();
             today = dd + '/' + mm + '/' + yyyy;
             $("#input").val(today);
             function ShowSpendings(date) {
-                $.get("Budget/GetSpendings", { date: date }, function (data) {
+                $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetSpendings")',
+                data: { date: date },
+                success: successFunc,
+                error: errorFunc
+                 });
+
+                function successFunc(data) {
                     $("#rData").empty();
                     $("#rData").html(data);
-                })
+                }
+
+                function errorFunc() {
+                    alert('Error');
+                }
             }
             ShowSpendings(today);
             $('#calendar').fullCalendar({
@@ -68,7 +88,6 @@
                 }
 
             });
-            
 
 
         });
